@@ -124,6 +124,66 @@ router.get('/GetSingle/:1/:2/:3/:4', function (req, res, next) {
     });
 
 });
+function updateData(gs1, cb) {
+
+
+    getApiToken(function(err, token) {
+        if (err) {
+            console.log(err);
+            cb(err);
+
+        } else {
+            let payload = {
+                url: base_url + '/products/' + gs1.gtin + '/serialNumber/' + gs1.serialNumber + '/lotNumber/' + gs1.lotNumber + '/expiryDate/' + gs1.expiryDate,
+                method: 'PATCH',
+                header: {
+                    "Content-Type": "application/json"
+                },
+                auth: {
+                    'bearer': token
+                },
+                proxy:'',
+                json: gs1,
+                rejectUnauthorized: false,
+                requestCert: true,
+                agent: false
+            };
+
+            request(payload, cb)
+
+        }
+    });
+
+}
+
+router.post('/Update/:1/:2/:3/:4', function (req, res, next) {
+    console.log(req.path);
+    var values = req.path.split('/');
+    var gs1 = {
+        gtin: values[2],
+        serialNumber: values[3],
+        lotNumber: values[4],
+        expiryDate: ""+ values[5]  // Note Date should be string
+    };
+    var keys = Object.keys(req.body);
+    console.log(keys);
+    for (var i = 0; i < keys.length; i++) {
+        gs1[keys[i]] = req.body[keys[i]];
+    }
+    console.log(gs1);
+    updateData(gs1, function(err, body, response) {
+        if (err) {
+            console.log(err);
+            res.json({status:500, data:err});
+        }
+        else {
+            var resp = response;
+            if (typeof(response) == 'string')
+                resp = JSON.parse(response);
+            res.json({status:200, data:resp});
+        }
+    });
+});
 
 /* GET home page. */
 router.get('/GetHistory/:1/:2/:3/:4', function (req, res, next) {
