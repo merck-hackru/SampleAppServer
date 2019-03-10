@@ -18,3 +18,6 @@ npm start
 
 ### Verify 
 http://localhost:3000/GetHistory/08806555018611/180914579188/r036191/2021-07-07T00:00:00.000Z
+
+### Added Single product retreive example 
+http://localhost:3000/GetSingle/08806555018611/180914579188/r036191/2021-07-07T00:00:00.000Z
