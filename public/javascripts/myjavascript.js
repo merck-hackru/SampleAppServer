@@ -6,7 +6,7 @@ function getHistory() {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "http://localhost:3000/GetHistory/08806555018611/180914579188/r036191/2021-07-07T00:00:00.000Z",
+        "url": "/GetHistory/08806555018611/180914579188/r036191/2021-07-07T00:00:00.000Z",
         "method": "GET",
         "headers": {
             "cache-control": "no-cache",
